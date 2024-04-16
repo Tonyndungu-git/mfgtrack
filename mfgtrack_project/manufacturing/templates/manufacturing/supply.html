@@ -1,0 +1,61 @@
+{% extends './base.html' %}
+{% block title %}Supplier Details{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Supplier Details</h2>
+    <form id="supplierForm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="supplierName" class="form-label">Supplier Name:</label>
+            <input type="text" class="form-control" id="supplierName" name="supplierName" required>
+        </div>
+        <div class="mb-3">
+            <label for="contactEmail" class="form-label">Contact Email:</label>
+            <input type="email" class="form-control" id="contactEmail" name="contactEmail" required>
+        </div>
+        <div class="mb-3">
+            <label for="phoneNumber" class="form-label">Phone Number:</label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div id="responseMessage"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('#supplierForm');
+    const responseMessage = document.querySelector('#responseMessage');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+        try {
+            const response = await fetch('{% url "save_supplier" %}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrftoken
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                responseMessage.textContent = 'Supplier details saved successfully.';
+                form.reset();
+            } else {
+                responseMessage.textContent = 'Error saving supplier details.';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            responseMessage.textContent = 'An error occurred while processing your request.';
+        }
+    });
+});
+</script>
+{% endblock %}

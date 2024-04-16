@@ -1,0 +1,22 @@
+<!-- mfgtrack_project/manufacturing/templates/home.html -->
+
+{% extends './base.html' %}
+
+{% block title %}MFGTRACK{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Manufacturing Tracking App</h1>
+        <p class="lead">This is the home page content.</p>
+        <hr class="my-4">
+        <p>Feel free to explore and learn more about our project.</p>
+    </div>
+
+    <h1>Welcome to MFGTrack</h1>
+    <ul>
+        <li><a href="{% url 'supply' %}">Suppliers</a></li>
+        <li><a href="{% url 'products' %}">Products</a></li>
+        <li><a href="{% url 'quality' %}">Quality</a></li>
+        <li><a href="{% url 'packaging' %}">Packaging</a></li>
+    </ul>
+{% endblock %}

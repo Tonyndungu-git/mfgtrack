@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Product List</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Unit Price</th>
+                <th>Supplier</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.unit_price }}</td>
+                <td>{{ product.supplier.name }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4">No products available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add a button to navigate back to product creation -->
+    <a href="{% url 'product_create' %}" class="btn btn-primary">Add New Product</a>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+<!-- supply.html -->
 {% extends './base.html' %}
 {% block title %}Supplier Details{% endblock %}
 
@@ -11,6 +12,10 @@
             <input type="text" class="form-control" id="supplierName" name="supplierName" required>
         </div>
         <div class="mb-3">
+            <label for="contactPerson" class="form-label">Contact Person:</label>
+            <input type="text" class="form-control" id="contactPerson" name="contactPerson" required>
+        </div>
+        <div class="mb-3">
             <label for="contactEmail" class="form-label">Contact Email:</label>
             <input type="email" class="form-control" id="contactEmail" name="contactEmail" required>
         </div>
@@ -18,9 +23,17 @@
             <label for="phoneNumber" class="form-label">Phone Number:</label>
             <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
         </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Address:</label>
+            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+        </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
     <div id="responseMessage"></div>
+
+    <!-- Remove supplierList display from here -->
+    <!-- Add a button to navigate to supplier list -->
+    <a href="{% url 'supplier_list' %}" class="btn btn-secondary mt-3">View Supplier List</a>
 </div>
 
 <script>
@@ -32,28 +45,32 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
 
         const formData = new FormData(form);
-        const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+        const csrftokenElement = document.querySelector('input[name="csrfmiddlewaretoken"]');
 
-        try {
-            const response = await fetch('{% url "save_supplier" %}', {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': csrftoken
-                },
-                body: formData
-            });
+        if (csrftokenElement) {
+            const csrftoken = csrftokenElement.value;
 
-            const data = await response.json();
+            try {
+                const response = await fetch('{% url "save_supplier" %}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: formData
+                });
 
-            if (response.ok) {
-                responseMessage.textContent = 'Supplier details saved successfully.';
-                form.reset();
-            } else {
-                responseMessage.textContent = 'Error saving supplier details.';
+                if (response.ok) {
+                    responseMessage.textContent = 'Supplier details saved successfully.';
+                    form.reset();
+                } else {
+                    responseMessage.textContent = 'Error saving supplier details.';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                responseMessage.textContent = 'An error occurred while saving supplier details.';
             }
-        } catch (error) {
-            console.error('Error:', error);
-            responseMessage.textContent = 'An error occurred while processing your request.';
+        } else {
+            console.error('CSRF token element not found.');
         }
     });
 });

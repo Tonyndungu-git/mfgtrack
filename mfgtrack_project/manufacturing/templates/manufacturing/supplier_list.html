@@ -1,0 +1,31 @@
+<!-- supplier_list.html -->
+{% extends './base.html' %}
+{% block title %}Supplier List{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Supplier List</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Contact Person</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+            <tr>
+                <td>{{ supplier.name }}</td>
+                <td>{{ supplier.contact_person }}</td>
+                <td>{{ supplier.email }}</td>
+                <td>{{ supplier.phone_number }}</td>
+                <td>{{ supplier.address }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

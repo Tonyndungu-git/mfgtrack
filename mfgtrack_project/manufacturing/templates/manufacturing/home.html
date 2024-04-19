@@ -1,22 +1,33 @@
-<!-- mfgtrack_project/manufacturing/templates/home.html -->
-
 {% extends './base.html' %}
+{% load static %}
 
 {% block title %}MFGTRACK{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Manufacturing Tracking App</h1>
-        <p class="lead">This is the home page content.</p>
-        <hr class="my-4">
-        <p>Feel free to explore and learn more about our project.</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="display-4">MFGTrack: A Manufacturing Tracking App</h1>
+                <p class="lead">Welcome to MFGTrack, a powerful Manufacturing Tracking Application designed to streamline and optimize production processes.</p>
+                <hr class="my-4">
+                <p>MFGTrack empowers manufacturing businesses to enhance efficiency, improve quality control, and achieve operational excellence.</p>
+                <p>Explore MFGTrack and discover how it can revolutionize your manufacturing operations.</p>
+                <ul>
+                    <li><a href="{% url 'supplier_list' %}">Explore Suppliers</a></li>
+                    <li><a href="{% url 'product_list' %}">Browse Products</a></li>
+                    <li><a href="{% url 'quality' %}">Learn about Quality Control</a></li>
+                    <li><a href="{% url 'packaging' %}">Discover Packaging Solutions</a></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="{% static 'img/photo_1.jpeg' %}" class="img-fluid" alt="Factory">
+            </div>
+        </div>
     </div>
+{% endblock %}
 
-    <h1>Welcome to MFGTrack</h1>
-    <ul>
-        <li><a href="{% url 'supply' %}">Suppliers</a></li>
-        <li><a href="{% url 'products' %}">Products</a></li>
-        <li><a href="{% url 'quality' %}">Quality</a></li>
-        <li><a href="{% url 'packaging' %}">Packaging</a></li>
-    </ul>
+{% block extra_css %}
+<style>
+    /* Customize styles here if needed */
+</style>
 {% endblock %}
